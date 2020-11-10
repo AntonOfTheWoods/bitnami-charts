@@ -257,6 +257,11 @@ persistence:
   ##
   enabled: true
 
+  ## Resource Policy
+  ## Setting it to "keep" to avoid removing PVCs during a helm delete operation
+  ##
+  # resourcePolicy: 'keep'  ## Enable persistence using an existing PVC (only in standalone mode)
+
   ## Enable persistence using an existing PVC (only in standalone mode)
   ##
   # existingClaim:

@@ -3,8 +3,19 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ include "minio.fullname" . }}
+  {{- if eq .Values.persistence.resourcePolicy "keep" }}
+  annotations:
+    helm.sh/resource-policy: keep
+  {{- end }}
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "minio.labels" . | nindent 4 }}
+    app.kubernetes.io/component: minio
+{{- with .Values.persistence.annotations }}
+  annotations:
+  {{- range $key, $value := . }}
+    {{ $key }}: {{ $value }}
+  {{- end }}
+{{- end }}
 spec:
   accessModes:
   {{- range .Values.persistence.accessModes }}
